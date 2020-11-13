@@ -145,4 +145,54 @@ $ docker exec -it b1 bash
 $ docker logs b1
 ````
 
+## Montando volume e conectando diretamento
+
+Para carregar um container já entrando no diretorio digite apenas o comando abaixo descrito
+
+```
+> docker run -it --rm -v ${PWD}:/myfiles -w /myfiles --name meu-primeiro-script php:7.2-cli /bin/bash 
+```
+
+Ele irá carregar o container, mapeando para dentro do container o diretorio local onde vc atualmente se encontra para o diretorio dentro do container "**/myfiles**" e o parametro -w irá para dentro do diretório.
+
+Neste exemplo usando um container em php para carregamento de uma pagina
+
+```
+ /tmp/renata ----------------------------------------------------------------- INT | 18:56:29 
+> echo '<? echo "test text \n";' > index.php       
+ /tmp/renata ----------------------------------------------------------------------- 18:57:15 
+> vim inde
+ /tmp/renata ----------------------------------------------------------------- INT | 18:57:17 
+> docker run -it --rm -v ${PWD}:/myfiles -w /myfiles --name meu-primeiro-script php:7.2-cli php index.php
+test text 
+```
+
+## Container segundo plano
+
+Simples, com parametro -d voce pode subir o container sem qualquer interação
+
+```
+ /tmp/renata ----------------------------------------------------------------------- 18:59:12 
+> docker run -d httpd
+Unable to find image 'httpd:latest' locally
+latest: Pulling from library/httpd
+bb79b6b2107f: Already exists 
+26694ef5449a: Pull complete 
+7b85101950dd: Pull complete 
+da919f2696f2: Pull complete 
+3ae86ea9f1b9: Pull complete 
+Digest: sha256:b82fb56847fcbcca9f8f162a3232acb4a302af96b1b2af1c4c3ac45ef0c9b968
+Status: Downloaded newer image for httpd:latest
+9c317eeb78f53684b4e6404b132211c06b1559506c455fdbdf02ffef15dc902c
+ /tmp/renata ----------------------------------------------------------------- 10s | 18:59:27 
+> docker ps          
+CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS              PORTS               NAMES
+9c317eeb78f5        httpd               "httpd-foreground"   12 seconds ago      Up 9 seconds        80/tcp              gracious_lichterman
+```
+
+
+
+
+
 Continue... [Dockerfile](03-entendendo-dockerfile.md)
+
